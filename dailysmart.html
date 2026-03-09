@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- CO1: HTML Document Structure -->
+<html lang="en">
+<head>
+  <!-- CO5: SEO Meta tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudySync – Smart weekly syllabus planner with topic explanations." />
+  <title>StudySync – Smart Syllabus Planner</title>
+  <!-- CO1: External font via HTTPS -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header role="banner">
+  <h1 class="logo">StudySync</h1>
+  <p class="tagline">Click any day → see full topic explanations with examples</p>
+</header>
+
+<main class="grid">
+
+  <!-- LEFT: Setup panel -->
+  <section aria-labelledby="pt">
+    <div class="card">
+      <h2 class="card-title" id="pt"><span>📚</span> Set Up Your Plan</h2>
+      <form id="plannerForm" novalidate>
+
+        <label for="si">Syllabus / Topics <span class="star">*</span></label>
+        <textarea id="si" placeholder="e.g. HTML Basics, CSS Flexbox, JS DOM…" required aria-required="true"></textarea>
+        <small class="h">Separate with commas or new lines.</small>
+        <div class="tags" id="topicTags" aria-live="polite"></div>
+
+        <label for="sd">Start Day <span class="star">*</span></label>
+        <select id="sd" required>
+          <option value="">— Pick a day —</option>
+          <option value="0">Monday</option><option value="1">Tuesday</option>
+          <option value="2">Wednesday</option><option value="3">Thursday</option>
+          <option value="4">Friday</option><option value="5">Saturday</option><option value="6">Sunday</option>
+        </select>
+
+        <label for="sdn">Days per week</label>
+        <input type="number" id="sdn" min="1" max="7" value="5" />
+        <div class="pills" id="dayPills" role="group" aria-label="Toggle study days"></div>
+
+        <label for="tpd">Max topics per day</label>
+        <input type="number" id="tpd" min="1" max="10" value="3" />
+
+        <hr />
+        <div class="btn-row">
+          <button type="submit" class="btn" id="genBtn">
+            <div class="spinner"></div>
+            <span class="btn-text">⚡ Generate Plan</span>
+          </button>
+          <button type="button" class="btn btn-o" id="resetBtn">↺ Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="card">
+      <h2 class="card-title"><span>💡</span> How it works</h2>
+      <ul class="key-list">
+        <li>Paste your full syllabus topics above</li>
+        <li>Choose start day & how many days per week</li>
+        <li>Click <strong style="color:var(--accent)">Generate Plan</strong> to split topics across the week</li>
+        <li>Click any <strong style="color:var(--accent2)">day card</strong> to see full explanations</li>
+        <li>Each topic shows definition, key points & code example</li>
+        <li>Mark days done to track your progress</li>
+      </ul>
+    </aside>
+  </section>
+
+  <!-- RIGHT: Schedule -->
+  <section aria-labelledby="scht">
+
+    <div class="stats">
+      <div class="stat"><div class="sv" id="stTotal">0</div><div class="sl">Topics</div></div>
+      <div class="stat"><div class="sv" id="stDays">0</div><div class="sl">Days</div></div>
+      <div class="stat"><div class="sv" id="stDone">0%</div><div class="sl">Done</div></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem">
+        <h2 class="card-title" id="scht" style="margin:0"><span>📅</span> Weekly Schedule</h2>
+        <span style="font-size:.75rem;color:var(--muted)">👆 Click a day to study</span>
+      </div>
+      <div class="prog-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progR">
+        <div class="prog-bar" id="progB"></div>
+      </div>
+      <div class="day-cards" id="dayCards">
+        <div class="empty"><span class="ic">🗓️</span><p>Generate a plan to see your schedule.</p></div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Topic Explanation Side Panel -->
+<aside class="explain-panel" id="explainPanel" aria-label="Topic explanations">
+  <div class="ep-header">
+    <div class="ep-title" id="epTitle">📖 Topics for Monday</div>
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <button class="btn btn-o btn-sm" id="markDoneBtn">✓ Mark Done</button>
+      <button class="ep-close" id="epClose">✕ Close</button>
+    </div>
+  </div>
+  <div class="ep-body" id="epBody"></div>
+</aside>
+
+<div class="toast" id="toast" role="alert"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
